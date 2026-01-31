@@ -74,6 +74,35 @@ function initGame(difficulty = 'beginner') {
     calculateNumbers();
 }
 
+// 触摸事件处理
+let touchTimer = null;
+const LONG_PRESS_DELAY = 500;
+
+function addTouchEvents(cell, row, col) {
+    cell.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        touchTimer = setTimeout(() => {
+            cell.classList.add('long-press');
+            handleRightClick(row, col);
+        }, LONG_PRESS_DELAY);
+    }, { passive: false });
+    
+    cell.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        clearTimeout(touchTimer);
+        cell.classList.remove('long-press');
+    }, { passive: false });
+    
+    cell.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        clearTimeout(touchTimer);
+        cell.classList.remove('long-press');
+        if (!cell.classList.contains('revealed') && !cell.classList.contains('flagged')) {
+            handleCellClick(row, col);
+        }
+    }, { passive: false });
+}
+
 // 生成游戏板UI
 function generateBoard() {
     gameBoard.innerHTML = '';
@@ -87,12 +116,15 @@ function generateBoard() {
             cell.dataset.row = row;
             cell.dataset.col = col;
             
-            // 添加点击事件
+            // 添加点击事件（桌面端）
             cell.addEventListener('click', () => handleCellClick(row, col));
             cell.addEventListener('contextmenu', (e) => {
                 e.preventDefault();
                 handleRightClick(row, col);
             });
+            
+            // 添加触摸事件（移动端）
+            addTouchEvents(cell, row, col);
             
             gameBoard.appendChild(cell);
         }
