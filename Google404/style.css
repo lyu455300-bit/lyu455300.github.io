@@ -109,11 +109,10 @@ body {
     border: 2px solid;
     border-color: #ffffff #808080 #808080 #ffffff;
     padding: 2px;
-    overflow-x: auto;
     max-width: 100%;
     box-sizing: border-box;
-    width: fit-content;
-    min-width: 100%;
+    width: 100%;
+    justify-content: center;
 }
 
 .cell {
@@ -225,16 +224,16 @@ body {
     
     .game-board {
         box-sizing: border-box;
-        width: fit-content;
-        min-width: 100%;
+        width: 100%;
         border: 2px solid;
         border-color: #ffffff #808080 #808080 #ffffff;
+        justify-content: center;
     }
     
     .cell {
-        width: 28px;
-        height: 28px;
-        font-size: 16px;
+        width: 22px;
+        height: 22px;
+        font-size: 14px;
     }
     
     /* 调整按钮大小 */
@@ -265,26 +264,6 @@ body {
         height: 36px;
         font-size: 18px;
     }
-    
-    /* 游戏板横向滚动优化 */
-    .game-board {
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-        scrollbar-color: #808080 #c0c0c0;
-    }
-    
-    .game-board::-webkit-scrollbar {
-        height: 8px;
-    }
-    
-    .game-board::-webkit-scrollbar-track {
-        background: #c0c0c0;
-    }
-    
-    .game-board::-webkit-scrollbar-thumb {
-        background: #808080;
-        border-radius: 4px;
-    }
 }
 
 /* 小屏幕手机适配 */
@@ -306,12 +285,13 @@ body {
         min-width: 100%;
         border: 2px solid;
         border-color: #ffffff #808080 #808080 #ffffff;
+        justify-content: center;
     }
     
     .cell {
-        width: 24px;
-        height: 24px;
-        font-size: 14px;
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
     }
     
     .difficulty-selector button {
@@ -364,16 +344,16 @@ body {
     
     .game-board {
         box-sizing: border-box;
-        width: fit-content;
-        min-width: 100%;
+        width: 100%;
         border: 2px solid;
         border-color: #ffffff #808080 #808080 #ffffff;
+        justify-content: center;
     }
     
     .cell {
-        width: 22px;
-        height: 22px;
-        font-size: 12px;
+        width: 15px;
+        height: 15px;
+        font-size: 10px;
     }
     
     .difficulty-selector button {
@@ -383,25 +363,5 @@ body {
     
     .game-title {
         font-size: 16px;
-    }
-    
-    /* 游戏板横向滚动优化 */
-    .game-board {
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-        scrollbar-color: #808080 #c0c0c0;
-    }
-    
-    .game-board::-webkit-scrollbar {
-        height: 5px;
-    }
-    
-    .game-board::-webkit-scrollbar-track {
-        background: #c0c0c0;
-    }
-    
-    .game-board::-webkit-scrollbar-thumb {
-        background: #808080;
-        border-radius: 2px;
     }
 }
