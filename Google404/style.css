@@ -1,0 +1,214 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #c0c0c0;
+    font-family: 'Arial', sans-serif;
+}
+
+.game-container {
+    background: #c0c0c0;
+    border: 3px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    padding: 15px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.game-title {
+    text-align: center;
+    font-size: 24px;
+    color: #000000;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.game-controls {
+    margin-bottom: 15px;
+}
+
+.difficulty-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.difficulty-selector button {
+    padding: 8px 16px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.1s ease;
+}
+
+.difficulty-selector button:hover {
+    background: #d0d0d0;
+}
+
+.difficulty-selector button:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+    padding: 9px 15px 7px 17px;
+}
+
+.game-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #000000;
+    color: #ff0000;
+    font-family: 'Digital', monospace;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.counter, .timer {
+    min-width: 80px;
+    text-align: center;
+    padding: 3px;
+    background: #000000;
+}
+
+.reset-btn {
+    width: 40px;
+    height: 40px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.reset-btn:hover {
+    background: #d0d0d0;
+}
+
+.reset-btn:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+    transform: scale(0.95);
+}
+
+.game-board {
+    display: grid;
+    gap: 1px;
+    background: #808080;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    padding: 2px;
+}
+
+.cell {
+    width: 30px;
+    height: 30px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.1s ease;
+}
+
+.cell:hover {
+    background: #d0d0d0;
+}
+
+.cell.revealed {
+    background: #e0e0e0;
+    border: 1px solid #808080;
+    cursor: default;
+}
+
+.cell.flagged {
+    color: #ff0000;
+    font-size: 18px;
+}
+
+.cell.mine {
+    background: #ff0000;
+}
+
+/* 数字颜色编码 */
+.cell[data-number="1"] { color: #0000ff; }
+.cell[data-number="2"] { color: #008000; }
+.cell[data-number="3"] { color: #ff0000; }
+.cell[data-number="4"] { color: #000080; }
+.cell[data-number="5"] { color: #800000; }
+.cell[data-number="6"] { color: #008080; }
+.cell[data-number="7"] { color: #000000; }
+.cell[data-number="8"] { color: #808080; }
+
+.game-message {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    min-height: 24px;
+}
+
+/* 烟花爆炸效果 */
+@keyframes fireworks {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+.fireworks {
+    animation: fireworks 0.8s ease-out forwards;
+    position: relative;
+}
+
+.fireworks::before {
+    content: "🎆";
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .cell {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+    }
+    
+    .difficulty-selector {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .difficulty-selector button {
+        width: 200px;
+    }
+}

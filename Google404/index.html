@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows经典扫雷 - 烟花版</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="game-title">Windows经典扫雷 - 烟花版</h1>
+        
+        <div class="game-controls">
+            <div class="difficulty-selector">
+                <button id="beginner">初级 (9x9, 10烟花)</button>
+                <button id="intermediate">中级 (16x16, 40烟花)</button>
+                <button id="expert">高级 (30x16, 99烟花)</button>
+            </div>
+            
+            <div class="game-info">
+                <div class="counter" id="mineCounter">0</div>
+                <button class="reset-btn" id="resetBtn">😊</button>
+                <div class="timer" id="timer">0</div>
+            </div>
+        </div>
+        
+        <div class="game-board" id="gameBoard"></div>
+        
+        <div class="game-message" id="gameMessage"></div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
