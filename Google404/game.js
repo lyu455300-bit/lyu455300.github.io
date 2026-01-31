@@ -162,9 +162,9 @@ function playWinSound() {
 
 // 难度设置
 const difficulties = {
-    beginner: { rows: 9, cols: 9, mines: 10 },
-    intermediate: { rows: 16, cols: 16, mines: 40 },
-    expert: { rows: 16, cols: 20, mines: 70 }
+    beginner: { rows: 12, cols: 8, mines: 10 },
+    intermediate: { rows: 20, cols: 13, mines: 40 },
+    expert: { rows: 24, cols: 14, mines: 70 }
 };
 
 // DOM元素

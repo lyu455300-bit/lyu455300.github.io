@@ -38,6 +38,7 @@ body {
     gap: 10px;
     margin-bottom: 15px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .difficulty-selector button {
@@ -49,6 +50,7 @@ body {
     font-size: 14px;
     font-weight: bold;
     transition: all 0.1s ease;
+    flex-shrink: 0;
 }
 
 .difficulty-selector button:hover {
@@ -231,22 +233,25 @@ body {
     }
     
     .cell {
-        width: 22px;
-        height: 22px;
-        font-size: 14px;
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
     }
     
     /* 调整按钮大小 */
     .difficulty-selector {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
     .difficulty-selector button {
-        width: 200px;
-        padding: 10px;
-        font-size: 14px;
+        width: auto;
+        padding: 8px 12px;
+        font-size: 12px;
+        flex-shrink: 0;
     }
     
     /* 调整游戏信息区域 */
@@ -289,9 +294,9 @@ body {
     }
     
     .cell {
-        width: 18px;
-        height: 18px;
-        font-size: 12px;
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
     }
     
     .difficulty-selector button {
@@ -314,26 +319,6 @@ body {
     .game-message {
         font-size: 16px;
     }
-    
-    /* 游戏板横向滚动优化 */
-    .game-board {
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-        scrollbar-color: #808080 #c0c0c0;
-    }
-    
-    .game-board::-webkit-scrollbar {
-        height: 6px;
-    }
-    
-    .game-board::-webkit-scrollbar-track {
-        background: #c0c0c0;
-    }
-    
-    .game-board::-webkit-scrollbar-thumb {
-        background: #808080;
-        border-radius: 3px;
-    }
 }
 
 /* 超小屏幕适配 */
@@ -351,9 +336,9 @@ body {
     }
     
     .cell {
-        width: 15px;
-        height: 15px;
-        font-size: 10px;
+        width: 22px;
+        height: 22px;
+        font-size: 12px;
     }
     
     .difficulty-selector button {
