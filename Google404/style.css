@@ -109,6 +109,11 @@ body {
     border: 2px solid;
     border-color: #ffffff #808080 #808080 #ffffff;
     padding: 2px;
+    overflow-x: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    width: fit-content;
+    min-width: 100%;
 }
 
 .cell {
@@ -210,11 +215,20 @@ body {
     .game-container {
         padding: 10px;
         margin: 10px;
+        overflow: hidden;
     }
     
     .game-title {
         font-size: 20px;
         margin-bottom: 10px;
+    }
+    
+    .game-board {
+        box-sizing: border-box;
+        width: fit-content;
+        min-width: 100%;
+        border: 2px solid;
+        border-color: #ffffff #808080 #808080 #ffffff;
     }
     
     .cell {
@@ -251,6 +265,26 @@ body {
         height: 36px;
         font-size: 18px;
     }
+    
+    /* 游戏板横向滚动优化 */
+    .game-board {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #808080 #c0c0c0;
+    }
+    
+    .game-board::-webkit-scrollbar {
+        height: 8px;
+    }
+    
+    .game-board::-webkit-scrollbar-track {
+        background: #c0c0c0;
+    }
+    
+    .game-board::-webkit-scrollbar-thumb {
+        background: #808080;
+        border-radius: 4px;
+    }
 }
 
 /* 小屏幕手机适配 */
@@ -258,11 +292,20 @@ body {
     .game-container {
         padding: 5px;
         margin: 5px;
+        overflow: hidden;
     }
     
     .game-title {
         font-size: 18px;
         margin-bottom: 8px;
+    }
+    
+    .game-board {
+        box-sizing: border-box;
+        width: fit-content;
+        min-width: 100%;
+        border: 2px solid;
+        border-color: #ffffff #808080 #808080 #ffffff;
     }
     
     .cell {
@@ -291,10 +334,42 @@ body {
     .game-message {
         font-size: 16px;
     }
+    
+    /* 游戏板横向滚动优化 */
+    .game-board {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #808080 #c0c0c0;
+    }
+    
+    .game-board::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .game-board::-webkit-scrollbar-track {
+        background: #c0c0c0;
+    }
+    
+    .game-board::-webkit-scrollbar-thumb {
+        background: #808080;
+        border-radius: 3px;
+    }
 }
 
 /* 超小屏幕适配 */
 @media (max-width: 360px) {
+    .game-container {
+        overflow: hidden;
+    }
+    
+    .game-board {
+        box-sizing: border-box;
+        width: fit-content;
+        min-width: 100%;
+        border: 2px solid;
+        border-color: #ffffff #808080 #808080 #ffffff;
+    }
+    
     .cell {
         width: 22px;
         height: 22px;
@@ -308,5 +383,25 @@ body {
     
     .game-title {
         font-size: 16px;
+    }
+    
+    /* 游戏板横向滚动优化 */
+    .game-board {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #808080 #c0c0c0;
+    }
+    
+    .game-board::-webkit-scrollbar {
+        height: 5px;
+    }
+    
+    .game-board::-webkit-scrollbar-track {
+        background: #c0c0c0;
+    }
+    
+    .game-board::-webkit-scrollbar-thumb {
+        background: #808080;
+        border-radius: 2px;
     }
 }

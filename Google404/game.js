@@ -16,11 +16,155 @@ let gameState = {
     remainingMines: 10
 };
 
+// 烟花爆炸音效
+let audioContext = null;
+
+function initAudio() {
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+}
+
+function playFireworksSound() {
+    try {
+        initAudio();
+        
+        const now = audioContext.currentTime;
+        
+        // 初始的"劈里"声 - 低频快速冲击
+        const splitOsc = audioContext.createOscillator();
+        const splitGain = audioContext.createGain();
+        
+        splitOsc.connect(splitGain);
+        splitGain.connect(audioContext.destination);
+        
+        splitOsc.frequency.value = 60 + Math.random() * 30;
+        splitOsc.type = 'sawtooth';
+        
+        splitGain.gain.setValueAtTime(0.5, now);
+        splitGain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+        
+        splitOsc.start(now);
+        splitOsc.stop(now + 0.08);
+        
+        // "啪啦"声 - 连续的中频爆炸
+        const popCount = 2 + Math.floor(Math.random() * 2); // 2-3个啪啦声
+        for (let pop = 0; pop < popCount; pop++) {
+            const popDelay = 0.05 + pop * 0.08; // 间隔0.05-0.21秒
+            const popTime = now + popDelay;
+            
+            const popOsc = audioContext.createOscillator();
+            const popGain = audioContext.createGain();
+            
+            popOsc.connect(popGain);
+            popGain.connect(audioContext.destination);
+            
+            popOsc.frequency.value = 150 + Math.random() * 80;
+            popOsc.type = 'square';
+            
+            popGain.gain.setValueAtTime(0.35, popTime);
+            popGain.gain.exponentialRampToValueAtTime(0.01, popTime + 0.12);
+            
+            popOsc.start(popTime);
+            popOsc.stop(popTime + 0.12);
+        }
+        
+        // "哗哗哗"声 - 高频持续的碎裂
+        const rustleCount = 5 + Math.floor(Math.random() * 4); // 5-8个哗哗声
+        for (let rustle = 0; rustle < rustleCount; rustle++) {
+            const rustleDelay = 0.1 + rustle * (0.04 + Math.random() * 0.03); // 密集的哗哗声
+            const rustleTime = now + rustleDelay;
+            
+            const rustleOsc = audioContext.createOscillator();
+            const rustleGain = audioContext.createGain();
+            
+            rustleOsc.connect(rustleGain);
+            rustleGain.connect(audioContext.destination);
+            
+            rustleOsc.frequency.value = 1000 + Math.random() * 2000;
+            rustleOsc.type = 'sawtooth';
+            
+            rustleGain.gain.setValueAtTime(0.12, rustleTime);
+            rustleGain.gain.exponentialRampToValueAtTime(0.01, rustleTime + 0.05);
+            
+            rustleOsc.start(rustleTime);
+            rustleOsc.stop(rustleTime + 0.05);
+        }
+        
+        // 添加持续的哗哗背景声
+        const shimmerOsc = audioContext.createOscillator();
+        const shimmerGain = audioContext.createGain();
+        
+        shimmerOsc.connect(shimmerGain);
+        shimmerGain.connect(audioContext.destination);
+        
+        shimmerOsc.frequency.value = 1500 + Math.random() * 1000;
+        shimmerOsc.type = 'sine';
+        
+        shimmerGain.gain.setValueAtTime(0.08, now + 0.15);
+        shimmerGain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+        
+        shimmerOsc.start(now + 0.15);
+        shimmerOsc.stop(now + 0.5);
+        
+        // 添加最后的余音
+        const finalOsc = audioContext.createOscillator();
+        const finalGain = audioContext.createGain();
+        
+        finalOsc.connect(finalGain);
+        finalGain.connect(audioContext.destination);
+        
+        finalOsc.frequency.value = 80 + Math.random() * 40;
+        finalOsc.type = 'triangle';
+        
+        const finalDelay = now + 0.4;
+        finalGain.gain.setValueAtTime(0.15, finalDelay);
+        finalGain.gain.exponentialRampToValueAtTime(0.01, finalDelay + 0.3);
+        
+        finalOsc.start(finalDelay);
+        finalOsc.stop(finalDelay + 0.3);
+        
+    } catch (error) {
+        console.log('音频播放失败:', error);
+    }
+}
+
+function playWinSound() {
+    try {
+        initAudio();
+        
+        const now = audioContext.currentTime;
+        
+        // 播放胜利的音效序列
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        
+        notes.forEach((freq, index) => {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = freq;
+            oscillator.type = 'sine';
+            
+            const startTime = now + index * 0.15;
+            gainNode.gain.setValueAtTime(0.2, startTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3);
+            
+            oscillator.start(startTime);
+            oscillator.stop(startTime + 0.3);
+        });
+    } catch (error) {
+        console.log('胜利音效播放失败:', error);
+    }
+}
+
 // 难度设置
 const difficulties = {
     beginner: { rows: 9, cols: 9, mines: 10 },
     intermediate: { rows: 16, cols: 16, mines: 40 },
-    expert: { rows: 16, cols: 30, mines: 99 }
+    expert: { rows: 16, cols: 20, mines: 70 }
 };
 
 // DOM元素
@@ -63,6 +207,9 @@ function initGame(difficulty = 'beginner') {
     timerDisplay.textContent = formatNumber(gameState.timer);
     resetBtn.textContent = '😊';
     gameMessage.textContent = '';
+    
+    // 初始化音频上下文
+    initAudio();
     
     // 生成游戏板
     generateBoard();
@@ -244,6 +391,7 @@ function revealCell(row, col) {
     
     // 如果是烟花，游戏结束
     if (gameState.board[row][col] === -1) {
+        playFireworksSound();
         gameOver(false);
         return;
     }
@@ -339,6 +487,7 @@ function gameOver(won) {
     if (won) {
         resetBtn.textContent = '😎';
         gameMessage.textContent = '恭喜你赢了！';
+        playWinSound();
         // 揭示所有烟花
         revealAllMines(true);
     } else {
@@ -351,6 +500,13 @@ function gameOver(won) {
 
 // 揭示所有烟花
 function revealAllMines(won) {
+    if (!won) {
+        // 失败时播放烟花爆炸音效
+        setTimeout(() => {
+            playFireworksSound();
+        }, 100);
+    }
+    
     for (let row = 0; row < gameState.rows; row++) {
         for (let col = 0; col < gameState.cols; col++) {
             if (gameState.board[row][col] === -1) {
